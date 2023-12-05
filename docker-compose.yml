@@ -1,5 +1,6 @@
-# Open folder in terminal
-# enterL: docker-compose up -d
+# Open folder in PowerShell
+# Enter: docker-compose up -d
+# https://wiki.ayanev.eu/#/do-it-yourself/2023-01-home-media-server/
 # https://www.reddit.com/r/unRAID/comments/180ou0b/psa_if_you_cant_login_to_qbittorrent_pass/
 
 # [xh.]?[._-]?(265)|(HEVC)
@@ -27,6 +28,18 @@ services:
       - "32413:32413/udp"
       - "32414:32414/udp"
     privileged: true
+    restart: unless-stopped
+  overseerr:
+    image: linuxserver/overseerr
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - C:\Containers\provision\overseerr\config:/config
+    ports:
+      - 5055:5055
     restart: unless-stopped
   prowlarr:
     image: linuxserver/prowlarr
